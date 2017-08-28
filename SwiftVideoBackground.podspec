@@ -7,6 +7,7 @@ Pod::Spec.new do |s|
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author       = { "Wilson Ding" => "hello@wilsonding.com" }
   s.platform     = :ios, "10.0"
+  s.tvos.deployment_target = "9.0"
   s.source       = { :git => "https://github.com/dingwilson/SwiftVideoBackground.git", :tag => "0.06" }
   s.source_files  = "SwiftVideoBackground", "SwiftVideoBackground/**/*.{h,m,swift}"
   s.exclude_files = "Classes/Exclude"
