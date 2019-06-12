@@ -120,7 +120,7 @@ public class VideoBackground {
         cleanUp()
 
         if setAudioSessionAmbient {
-            if #available(iOS 10.0, *) {
+            if #available(iOS 10.0, tvOS 10.0, *) {
                 try? AVAudioSession.sharedInstance().setCategory(
                     AVAudioSession.Category.ambient,
                     mode: AVAudioSession.Mode.default
