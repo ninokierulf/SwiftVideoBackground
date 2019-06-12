@@ -1,14 +1,16 @@
 Pod::Spec.new do |s|
   s.name         = "SwiftVideoBackground"
-  s.version      = "0.06"
-  s.summary      = "An easy to use Swift framework that creates a video background for any ViewController."
-  s.description  = "SwiftVideoBackground is an easy to use Swift framework that provides the ability to add a UIView of a video playing in the background to any ViewController. This provides a beautiful user interface for use in login screens, as well as other data input screens, as modeled by Spotify's iOS App Login Screen and others"
+  s.version      = "3.3.0"
+  s.summary      = "An easy to use Swift framework to play a video in the background of any UIView."
+  s.description  = "SwiftVideoBackground is an easy to use Swift framework that provides the ability to play a video on any UIView. This provides a beautiful UI for login screens, or splash pages, as implemented by Spotify and many others"
+  s.screenshots  = "https://i.imgur.com/PzRw2Ku.gif"
   s.homepage     = "https://github.com/dingwilson/SwiftVideoBackground"
   s.license      = { :type => "MIT", :file => "LICENSE" }
-  s.author       = { "Wilson Ding" => "hello@wilsonding.com" }
-  s.platform     = :ios, "10.0"
+  s.author       = { "Wilson Ding" => "hello@wilsonding.com",
+                     "Quan Vo" => "qvo1987@gmail.com" }
+  s.platform     = :ios, "8.0"
   s.tvos.deployment_target = "9.0"
-  s.source       = { :git => "https://github.com/dingwilson/SwiftVideoBackground.git", :tag => "0.06" }
-  s.source_files  = "SwiftVideoBackground", "SwiftVideoBackground/**/*.{h,m,swift}"
-  s.exclude_files = "Classes/Exclude"
+  s.source       = { :git => "https://github.com/dingwilson/SwiftVideoBackground.git", :tag => s.version }
+  s.source_files  = "SwiftVideoBackground/Sources/", "SwiftVideoBackground/Sources/**/*.{h,m,swift}"
+  s.documentation_url = "http://wilsonding.com/SwiftVideoBackground/"
 end

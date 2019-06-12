@@ -6,26 +6,87 @@
 //  Copyright © 2016 Wilson Ding. All rights reserved.
 //
 
+import AVKit
+import SwiftVideoBackground
 import XCTest
-@testable import SwiftVideoBackground
 
 class SwiftVideoBackgroundTests: XCTestCase {
-    
-    let vc = BackgroundVideo()
-    
+    let videoName = "Background"
+    let videoType = "mp4"
+    var view = UIView()
+    var player: AVPlayer? {
+        return VideoBackground.shared.playerLayer.player
+    }
+
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        view = UIView()
     }
-    
-    func testAssert() {
-        // Will add tests in future
-        XCTAssert(true)
+
+    func testPlayLocalVideo() {
+        do {
+            try VideoBackground.shared.play(view: view, videoName: videoName, videoType: videoType)
+        } catch {
+            XCTAssertNil(error)
+        }
     }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+
+    func testPlayLocalVideoNotFound() {
+        let videoInfo = (name: "NonExistantVideo", type: "mp4")
+
+        do {
+            try VideoBackground.shared.play(view: view, videoName: videoInfo.name, videoType: videoInfo.type)
+        } catch {
+            XCTAssertEqual(
+                error.localizedDescription,
+                VideoBackgroundError.videoNotFound(videoInfo).localizedDescription
+            )
+        }
+
+        XCTAssert(view.subviews.isEmpty)
     }
-    
+
+    func testPlayFromURL() {
+        let url = URL(string: "https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4")!
+        VideoBackground.shared.play(view: view, url: url)
+    }
+
+    func testPause() {
+        if #available(iOS 10.0, *) {
+            play()
+            VideoBackground.shared.pause()
+            XCTAssertEqual(player?.timeControlStatus, AVPlayer.TimeControlStatus.paused)
+        }
+    }
+
+    func testResume() {
+        if #available(iOS 10.0, *) {
+            play()
+            VideoBackground.shared.pause()
+            VideoBackground.shared.resume()
+            XCTAssertEqual(player?.rate, 1)
+        }
+    }
+
+    func testRestart() {
+        if #available(iOS 10.0, *) {
+            play()
+            VideoBackground.shared.pause()
+            VideoBackground.shared.restart()
+            XCTAssertEqual(player?.rate, 1)
+        }
+    }
+
+    func testSetIsMuted() {
+        play()
+        XCTAssertEqual(player?.isMuted, true)
+        VideoBackground.shared.isMuted = false
+        XCTAssertEqual(player?.isMuted, false)
+    }
+}
+
+extension SwiftVideoBackgroundTests {
+    func play() {
+        try? VideoBackground.shared.play(view: view, videoName: videoName, videoType: videoType)
+    }
 }
